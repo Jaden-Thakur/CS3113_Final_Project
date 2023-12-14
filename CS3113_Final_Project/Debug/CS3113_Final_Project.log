@@ -1,0 +1,3 @@
+﻿  Entity.cpp
+C:\Users\drago\source\repos\CS3113_Final_Project\CS3113_Final_Project\Entity.h(32,18): warning C4305: 'initializing': truncation from 'double' to 'float'
+  CS3113_Final_Project.vcxproj -> C:\Users\drago\source\repos\CS3113_Final_Project\CS3113_Final_Project\Debug\CS3113_Final_Project.exe
