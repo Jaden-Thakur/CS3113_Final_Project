@@ -162,7 +162,7 @@ void initialize()
     g_level_2->m_state.next_scene = g_level_3;
     g_level_3->m_state.next_scene = g_level_0;
 
-    switch_to_scene(g_level_0);
+    switch_to_scene(g_level_2);
 
     player = g_active_scene->m_state.player;
     enemies = g_active_scene->m_state.enemies;
@@ -362,7 +362,7 @@ void update()
         sword = g_active_scene->m_state.sword;
     }
     // Level 2 -> 3
-    if (player->get_position().x == 17 && player->get_position().y == 17 && g_active_scene == g_level_1) {
+    if (player->get_position().x >= 7 && player->get_position().y <= -8 && player->get_position().x <= 8 && player->get_position().y >= -9 && g_active_scene == g_level_2) {
         player->set_velocity(glm::vec3(0.0f, 0.0f, 0.0f));
         switch_to_scene(g_active_scene->get_next_scene());
         player = g_active_scene->m_state.player;

@@ -78,7 +78,7 @@ void Entity::activate_ai(Entity* player, float delta_time)
 {
     switch (m_enemy_type) 
     {
-    case JUMPY:
+    /*case JUMPY:
         if (glm::distance(m_position, player->get_position()) > 10) {
             set_mode(PATROL);
             ai_patrol(delta_time);
@@ -93,8 +93,7 @@ void Entity::activate_ai(Entity* player, float delta_time)
         set_mode(IDLE);
         ai_idle(delta_time);
         
-        break;
-
+        break;*/
     case DASHY:
         if (glm::distance(m_position, player->get_position()) > 3) {
             set_mode(PATROL);
@@ -122,9 +121,15 @@ void Entity::ai_attack(Entity* player) {
                 move_right();
                 m_animation_indices = m_animation[LEFT];
             }
+            if (m_position.y > player->get_position().y + player->get_height()) {
+                move_down();
+            }
+            else if (m_position.y < player->get_position().y - player->get_height()) {
+                move_up();
+            }
         }
 
-        if (m_enemy_type == JUMPY && m_collided_bottom) {
+        /*if (m_enemy_type == JUMPY && m_collided_bottom) {
             if (m_position.x > player->get_position().x) {
                 move_right();
                 m_animation_indices = m_animation[RIGHT];
@@ -143,7 +148,7 @@ void Entity::ai_attack(Entity* player) {
                 move_right();
                 m_animation_indices = m_animation[LEFT];
             }
-        }
+        }*/
         break;
     }
 }

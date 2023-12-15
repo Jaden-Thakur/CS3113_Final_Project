@@ -139,7 +139,6 @@ void Level1::initialize()
         m_state.enemies[i].set_enemy_type(DASHY);
         m_state.enemies[i].set_mode(IDLE);
         m_state.enemies[i].m_texture_id = dashy_texture_id;
-        m_state.enemies[i].set_position(glm::vec3(20.0f + i, -20.0f - i, 0.0f));
         m_state.enemies[i].set_movement(glm::vec3(0.0f));
         m_state.enemies[i].set_speed(1.0f);
 
@@ -152,6 +151,14 @@ void Level1::initialize()
         m_state.enemies[i].m_animation_cols = 2;
         m_state.enemies[i].m_animation_rows = 2;
     }
+
+    m_state.enemies[0].set_position(glm::vec3(25.0f, -9.0f, 0.0f));
+    m_state.enemies[1].set_position(glm::vec3(20.0f, -19.0f, 0.0f));
+    m_state.enemies[2].set_position(glm::vec3(24.0f, -24.0f, 0.0f));
+    m_state.enemies[3].set_position(glm::vec3(25.0f, -24.0f, 0.0f));
+    m_state.enemies[4].set_position(glm::vec3(24.0f, -25.0f, 0.0f));
+    m_state.enemies[5].set_position(glm::vec3(20.0f, -28.0f, 0.0f));
+    m_state.enemies[6].set_position(glm::vec3(28.0f, -28.0f, 0.0f));
    
 }
 
