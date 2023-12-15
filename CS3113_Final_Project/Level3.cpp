@@ -35,8 +35,8 @@ Level3::~Level3()
     delete[] m_state.enemies;
     delete    m_state.player;
     delete    m_state.map;
-    Mix_FreeChunk(m_state.jump_sfx);
-    Mix_FreeMusic(m_state.bgm);
+    /*Mix_FreeChunk(m_state.jump_sfx);
+    Mix_FreeMusic(m_state.bgm);*/
 }
 
 void Level3::initialize()
@@ -68,8 +68,6 @@ void Level3::initialize()
     /* m_state.player->set_height(0.8f);
      m_state.player->set_width(0.8f);*/
 
-     // Jumping
-    m_state.player->m_jumping_power = 5.0f;
 
 
     // Enemy Stuff
@@ -100,7 +98,7 @@ void Level3::initialize()
     /**
      BGM and SFX
      */
-    Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 4096);
+    /*Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 4096);
 
     m_state.bgm = Mix_LoadMUS("assets/mario.mp3");
     Mix_PlayMusic(m_state.bgm, -1);
@@ -110,7 +108,7 @@ void Level3::initialize()
     Mix_VolumeChunk(
         m_state.jump_sfx,
         1.0f
-    );
+    );*/
 }
 
 void Level3::update(float delta_time)

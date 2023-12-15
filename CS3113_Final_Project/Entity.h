@@ -1,8 +1,9 @@
 #pragma once
 
-enum EntityType { PLAYER, PLATFORM, ENEMY, LIFE};
+enum EntityType { PLAYER, PLATFORM, ENEMY, LIFE, SWORD};
 enum EnemyType { JUMPY, SPIKY, DASHY };
 enum AIMode { AGGRO, IDLE, PATROL };
+enum FireDirection { LEFT, RIGHT, UP, DOWN };
 
 #include "Map.h"
 
@@ -12,7 +13,9 @@ private:
 	
 
 	int* m_left = NULL,
-		* m_right = NULL;
+		* m_right = NULL,
+		* m_up = NULL,
+		* m_down = NULL;
 
 
 	// PHYSICS (GRAVITY) 
@@ -38,24 +41,31 @@ private:
 
 public:
 
+
+	Entity* weapon;
+
+	bool hit;
+
 	bool m_is_active = true;
 	bool dead;
-	bool m_is_jumping = false;
-	float m_jumping_power = 5.0f;
 
 	float timer = 0.0f;
 	float dir = 1.0f;
 
 	// ————— STATIC VARIABLES ————— //
 	static const int SECONDS_PER_FRAME = 4;
-	static const int LEFT = 1,
-		RIGHT = 0;
+	static const int RIGHT = 0,
+		LEFT = 1,
+		UP = 2,
+		DOWN = 3;
 
 	// ANIMATION
-	int** m_animation = new int* [2]
+	int** m_animation = new int* [4]
 		{
 			m_left,
-			m_right,	
+			m_right,
+			m_up,
+			m_down
 		};
 
 	int m_animation_frames = 0,
@@ -72,6 +82,9 @@ public:
 	void ai_idle(float delta_time);
 
 	bool m_can_damage = true;
+	bool flying = false;
+	int fire_height;
+	int fire_dir = 0;
 
 	// PHYSICS COLLISIONS
 	bool m_collided_top = false;
@@ -89,6 +102,7 @@ public:
 	~Entity();
 
 	void scale();
+	void give_sword(Entity* sword);
 	void update(float delta_time, Entity* player, Entity* collidatble_entities1, int collidable_entity_count, Map* map);
 	void draw_sprite_from_texture_atlas(ShaderProgram* program, GLuint texture_id, int index);
 	void render(ShaderProgram* program);
@@ -103,6 +117,8 @@ public:
 	void move_right() { m_movement.x = m_speed; };
 	void move_down() { m_movement.y = -m_speed; };
 	void move_up() { m_movement.y = m_speed; };
+
+	//void attack();
 
 
 	void activate();

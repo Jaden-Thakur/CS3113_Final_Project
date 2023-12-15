@@ -24,10 +24,11 @@ struct GameState
     Map *map;
     Entity *player;
     Entity *enemies;
+    Entity *sword;
     
     // ————— AUDIO ————— //
-    Mix_Music *bgm;
-    Mix_Chunk *jump_sfx;
+    //Mix_Music *bgm;
+    //Mix_Chunk *jump_sfx;
     
     // ————— POINTERS TO OTHER SCENES ————— //
     Scene* next_scene;

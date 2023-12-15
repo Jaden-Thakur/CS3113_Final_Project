@@ -30,6 +30,12 @@ const float GRAVITY = 1.0f;
 
 
 Entity::Entity() {
+
+    dead = false;
+    fire_height = 0;
+    weapon = nullptr;
+    hit = false;
+
     // PHYSICS (GRAVITY) 
     m_position = glm::vec3(0.0f);
     m_velocity = glm::vec3(0.0f);
@@ -55,6 +61,10 @@ void Entity::scale() {
     m_model_matrix = glm::scale(m_model_matrix, glm::vec3(m_width, m_height, 1.0));
 }
 
+void Entity::give_sword(Entity* sword) {
+    this->weapon = sword;
+}
+
 void Entity::activate() {
     this->m_is_active = true;
 };
@@ -69,7 +79,6 @@ void Entity::activate_ai(Entity* player, float delta_time)
     switch (m_enemy_type) 
     {
     case JUMPY:
-        m_jumping_power = 3 * player->m_jumping_power / 2;
         if (glm::distance(m_position, player->get_position()) > 10) {
             set_mode(PATROL);
             ai_patrol(delta_time);
@@ -116,7 +125,6 @@ void Entity::ai_attack(Entity* player) {
         }
 
         if (m_enemy_type == JUMPY && m_collided_bottom) {
-            m_is_jumping = true;
             if (m_position.x > player->get_position().x) {
                 move_right();
                 m_animation_indices = m_animation[RIGHT];
@@ -191,9 +199,31 @@ void Entity::update(float delta_time, Entity* player, Entity* collidable_entitie
         return;
     }
 
-   /* if (this->m_entity_type == ENEMY) {
-        this->activate_ai(player, delta_time);
-    }*/
+    if (m_entity_type == ENEMY) {
+        activate_ai(player, delta_time);
+    }
+
+    if (m_entity_type == SWORD) {
+        if (flying) {
+            if (fire_dir == LEFT) {
+                m_movement.x = -1.0f;
+            }
+            else if (fire_dir == RIGHT) {
+                m_movement.x = 1.0f;
+            }
+            else if (fire_dir == UP) {
+                m_movement.y = 1.0f;
+            }
+            else if (fire_dir == DOWN) {
+                m_movement.y = -1.0f;
+            }
+        }
+        else {
+            m_position = player->m_position;
+            m_position.y = player->m_position.y - player->m_width / 4;
+            m_movement = glm::vec3(0.0f);
+        }   
+    }
     
     if (m_animation_indices != NULL)
     {
@@ -214,21 +244,6 @@ void Entity::update(float delta_time, Entity* player, Entity* collidable_entitie
             }
         }
 
-        if (m_entity_type == ENEMY) {
-            activate_ai(player, delta_time);
-        }
-
-       
-
-       
-
-       /* if (m_is_jumping)
-        {
-            m_is_jumping = false;
-
-            m_velocity.y += m_jumping_power;
-        }*/
-
         // collision checks
         m_collided_top = false;
         m_collided_bottom = false;
@@ -238,15 +253,6 @@ void Entity::update(float delta_time, Entity* player, Entity* collidable_entitie
         m_velocity.x = m_movement.x * m_speed;
         m_velocity.y = m_movement.y * m_speed;
 
-        // gravity
-
-       /* m_velocity += m_acceleration * delta_time;
-        if (m_entity_type != LIFE) {
-            m_velocity.y -= GRAVITY * delta_time;
-        }
-        */
-
-
         m_position.x += m_velocity.x * delta_time;
         check_collision_x(collidable_entities1, collidable_entity_count);
         check_collision_x(map);
@@ -255,19 +261,15 @@ void Entity::update(float delta_time, Entity* player, Entity* collidable_entitie
         check_collision_y(collidable_entities1, collidable_entity_count);
         check_collision_y(map);
 
-        
-
-       /* if (m_collided_bottom) {
-            m_acceleration.x = 0;
-        }*/
-
         m_position += m_movement * delta_time;
 
-
-        // ����� TRANSFORMATIONS ����� //
+        //����� TRANSFORMATIONS ����� //
         m_model_matrix = glm::mat4(1.0f);
         m_model_matrix = glm::translate(m_model_matrix, m_position);
     }
+
+   
+
 }
 
 void const Entity::check_collision_y(Entity* collidable_entities, int collidable_entity_count)
@@ -293,7 +295,14 @@ void const Entity::check_collision_y(Entity* collidable_entities, int collidable
                 
             }
 
-            dead = true;
+            if (m_entity_type == PLAYER) {
+                dead = true;
+            }
+
+            if (m_entity_type == SWORD) {
+                hit = true;
+                collidable_entity->deactivate();
+            }
         }
 
 
@@ -323,7 +332,14 @@ void const Entity::check_collision_x(Entity* collidable_entities, int collidable
                 
             }
             
-            dead = true;
+            if (m_entity_type == PLAYER) {
+                dead = true;
+            }
+
+            if (m_entity_type == SWORD) {
+                hit = true;
+                collidable_entity->deactivate();
+            }
 
         }
 
@@ -352,18 +368,27 @@ void const Entity::check_collision_y(Map* map)
         m_position.y -= penetration_y;
         m_velocity.y = 0;
         m_collided_top = true;
+        if (m_entity_type == SWORD) {
+            hit = true;
+        }
     }
     else if (map->is_solid(top_left, &penetration_x, &penetration_y) && m_velocity.y > 0)
     {
         m_position.y -= penetration_y;
         m_velocity.y = 0;
         m_collided_top = true;
+        if (m_entity_type == SWORD) {
+            hit = true;
+        }
     }
     else if (map->is_solid(top_right, &penetration_x, &penetration_y) && m_velocity.y > 0)
     {
         m_position.y -= penetration_y;
         m_velocity.y = 0;
         m_collided_top = true;
+        if (m_entity_type == SWORD) {
+            hit = true;
+        }
     }
 
     // And the bottom three points
@@ -372,6 +397,9 @@ void const Entity::check_collision_y(Map* map)
         m_position.y += penetration_y;
         m_velocity.y = 0;
         m_collided_bottom = true;
+        if (m_entity_type == SWORD) {
+            hit = true;
+        }
 
     }
     else if (map->is_solid(bottom_left, &penetration_x, &penetration_y) && m_velocity.y < 0)
@@ -379,7 +407,9 @@ void const Entity::check_collision_y(Map* map)
         m_position.y += penetration_y;
         m_velocity.y = 0;
         m_collided_bottom = true;
-
+        if (m_entity_type == SWORD) {
+            hit = true;
+        }
 
     }
     else if (map->is_solid(bottom_right, &penetration_x, &penetration_y) && m_velocity.y < 0)
@@ -387,6 +417,9 @@ void const Entity::check_collision_y(Map* map)
         m_position.y += penetration_y;
         m_velocity.y = 0;
         m_collided_bottom = true;
+        if (m_entity_type == SWORD) {
+            hit = true;
+        }
     }
 
 }
@@ -413,6 +446,9 @@ void const Entity::check_collision_x(Map* map)
         m_position.x += penetration_x;
         m_velocity.x = 0;
         m_collided_left = true;
+        if (m_entity_type == SWORD) {
+            hit = true;
+        }
     }
     if (map->is_solid(top_left, &penetration_x, &penetration_y) && m_velocity.x < 0)
     {
@@ -420,6 +456,9 @@ void const Entity::check_collision_x(Map* map)
         m_position.x += penetration_x;
         m_velocity.x = 0;
         m_collided_left = true;
+        if (m_entity_type == SWORD) {
+            hit = true;
+        }
     }
     if (map->is_solid(bottom_left, &penetration_x, &penetration_y) && m_velocity.x < 0)
     {
@@ -427,6 +466,9 @@ void const Entity::check_collision_x(Map* map)
         m_position.x += penetration_x;
         m_velocity.x = 0;
         m_collided_left = true;
+        if (m_entity_type == SWORD) {
+            hit = true;
+        }
     }
     if (map->is_solid(right, &penetration_x, &penetration_y) && m_velocity.x > 0)
     {
@@ -434,6 +476,9 @@ void const Entity::check_collision_x(Map* map)
         m_position.x -= penetration_x;
         m_velocity.x = 0;
         m_collided_right = true;
+        if (m_entity_type == SWORD) {
+            hit = true;
+        }
     }
     if (map->is_solid(top_right, &penetration_x, &penetration_y) && m_velocity.x > 0)
     {
@@ -441,6 +486,9 @@ void const Entity::check_collision_x(Map* map)
         m_position.x -= penetration_x;
         m_velocity.x = 0;
         m_collided_right = true;
+        if (m_entity_type == SWORD) {
+            hit = true;
+        }
     }
     if (map->is_solid(bottom_right, &penetration_x, &penetration_y) && m_velocity.x > 0)
     {
@@ -448,6 +496,9 @@ void const Entity::check_collision_x(Map* map)
         m_position.x -= penetration_x;
         m_velocity.x = 0;
         m_collided_right = true;
+        if (m_entity_type == SWORD) {
+            hit = true;
+        }
     }
 
 }

@@ -4,7 +4,7 @@
 class Level2 : public Scene {
 public:
     // ————— STATIC ATTRIBUTES ————— //
-    int ENEMY_COUNT = 1;
+    int ENEMY_COUNT = 10;
 
     // ————— CONSTRUCTOR ————— //
     ~Level2();
