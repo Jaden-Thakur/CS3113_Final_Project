@@ -91,10 +91,10 @@ void Level0::update(float delta_time)
 void Level0::render(ShaderProgram* program)
 {
     m_state.map->render(program);
-    m_title = "Not So Super Jaden";
+    m_title = "Jaden in the Dungeon";
     m_text = "Press \"enter\" to Start";
-    m_title_position = glm::vec3(0.5f, -1.0f, 0.0f);
-    m_text_position = glm::vec3(0.5f, -3.0f, 0.0f);
-    Utility::draw_text(program, m_font_texture_id, m_title, 0.5f, 0.000001f, m_title_position);
+    m_title_position = glm::vec3(0.7f, -2.0f, 0.0f);
+    m_text_position = glm::vec3(0.5f, -4.0f, 0.0f);
+    Utility::draw_text(program, m_font_texture_id, m_title, 0.4f, 0.000001f, m_title_position);
     Utility::draw_text(program, m_font_texture_id, m_text, 0.4f, 0.000001f, m_text_position);
 }

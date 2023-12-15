@@ -1,7 +1,7 @@
 /**
 * Author: Jaden Thakur
 * Assignment: Platformer
-* Date due: 2023-12-2, 11:59pm
+* Date due: 2023-12-15, 11:59pm
 * I pledge that I have completed this assignment without
 * collaborating with anyone else, in conformance with the
 * NYU School of Engineering Policies and Procedures on
@@ -162,7 +162,7 @@ void initialize()
     g_level_2->m_state.next_scene = g_level_3;
     g_level_3->m_state.next_scene = g_level_0;
 
-    switch_to_scene(g_level_2);
+    switch_to_scene(g_level_0);
 
     player = g_active_scene->m_state.player;
     enemies = g_active_scene->m_state.enemies;
@@ -371,13 +371,14 @@ void update()
         sword = g_active_scene->m_state.sword;
     }
     // Level 3 -> Endcard
-    if (player->get_position().x == 9 && player->get_position().y == 21 && g_active_scene == g_level_1) {
+    if (player->get_position().x >= 7.5 && player->get_position().y <= -16 && player->get_position().x <= 8.5 && player->get_position().y >= -17 && g_active_scene == g_level_3) {
         player->set_velocity(glm::vec3(0.0f, 0.0f, 0.0f));
-        switch_to_scene(g_active_scene->get_next_scene());
+        /*switch_to_scene(g_active_scene->get_next_scene());
         player = g_active_scene->m_state.player;
         enemies = g_active_scene->m_state.enemies;
         map = g_active_scene->m_state.map;
-        sword = g_active_scene->m_state.sword;
+        sword = g_active_scene->m_state.sword;*/
+        g_win = true;
     }
 
     if (player->dead && g_life_count > 0) {
@@ -429,10 +430,12 @@ void render()
         
     // render UI element based on win or lose
     if (g_win) {
+        LOG(g_win)
         endscreen_text = "You Won!";
         font_position = glm::vec3(player->get_position().x - 2.0f, player->get_position().y, 0.0f);
         Utility::draw_text(&g_program, font_texture_id, endscreen_text, 0.5f, 0.000001f, font_position);
         player->deactivate();
+        sword->deactivate();
     }
     if (g_life_count == 0) {
         endscreen_text = "You Lost!";

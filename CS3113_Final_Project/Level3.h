@@ -3,7 +3,7 @@
 class Level3 : public Scene {
 public:
     // ————— STATIC ATTRIBUTES ————— //
-    int ENEMY_COUNT = 1;
+    int ENEMY_COUNT = 15;
 
     // ————— CONSTRUCTOR ————— //
     ~Level3();

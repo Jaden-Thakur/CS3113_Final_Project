@@ -144,6 +144,41 @@ void Level3::initialize()
     m_state.enemies[0].m_animation_cols = 2;
     m_state.enemies[0].m_animation_rows = 2;
 
+
+    for (size_t i = 0; i < ENEMY_COUNT; i++) {
+        m_state.enemies[i].set_entity_type(ENEMY);
+        m_state.enemies[i].set_enemy_type(DASHY);
+        m_state.enemies[i].set_mode(IDLE);
+        m_state.enemies[i].m_texture_id = dashy_texture_id;
+        m_state.enemies[i].set_movement(glm::vec3(0.0f));
+        m_state.enemies[i].set_speed(1.0f);
+
+        m_state.enemies[i].m_animation[m_state.enemies[i].LEFT] = new int[2] { 1, 3};
+        m_state.enemies[i].m_animation[m_state.enemies[i].RIGHT] = new int[2] { 0, 2};
+        m_state.enemies[i].m_animation_indices = m_state.enemies[i].m_animation[m_state.enemies[i].LEFT];
+        m_state.enemies[i].m_animation_time = 0.0f;
+        m_state.enemies[i].m_animation_frames = 2;
+        m_state.enemies[i].m_animation_index = 0;
+        m_state.enemies[i].m_animation_cols = 2;
+        m_state.enemies[i].m_animation_rows = 2;
+    }
+
+    m_state.enemies[0].set_position(glm::vec3(17.0f, -13.0f, 0.0f));
+    m_state.enemies[1].set_position(glm::vec3(19.0f, -13.0f, 0.0f));
+    m_state.enemies[2].set_position(glm::vec3(21.0f, -13.0f, 0.0f));
+    m_state.enemies[3].set_position(glm::vec3(22.0f, -12.0f, 0.0f));
+    m_state.enemies[4].set_position(glm::vec3(22.0f, -10.0f, 0.0f));
+    m_state.enemies[5].set_position(glm::vec3(22.0f, -6.0f, 0.0f));
+    m_state.enemies[6].set_position(glm::vec3(32.0f, -6.0f, 0.0f));
+    m_state.enemies[7].set_position(glm::vec3(22.0f, -16.0f, 0.0f));
+    m_state.enemies[8].set_position(glm::vec3(22.0f, -23.0f, 0.0f));
+    m_state.enemies[9].set_position(glm::vec3(25.0f, -23.0f, 0.0f));
+    m_state.enemies[10].set_position(glm::vec3(19.0f, -21.0f, 0.0f));
+    m_state.enemies[11].set_position(glm::vec3(13.0f, -9.0f, 0.0f));
+    m_state.enemies[12].set_position(glm::vec3(10.0f, -18.0f, 0.0f));
+    m_state.enemies[13].set_position(glm::vec3(8.0f, -18.0f, 0.0f));
+    m_state.enemies[14].set_position(glm::vec3(6.0f, -13.0f, 0.0f));
+
 }
 
 void Level3::update(float delta_time)
