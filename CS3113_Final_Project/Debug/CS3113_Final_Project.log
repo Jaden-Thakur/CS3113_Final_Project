@@ -1,1 +1,28 @@
-﻿  CS3113_Final_Project.vcxproj -> C:\Users\drago\source\repos\CS3113_Final_Project\CS3113_Final_Project\Debug\CS3113_Final_Project.exe
+﻿  Entity.cpp
+C:\Users\drago\source\repos\CS3113_Final_Project\CS3113_Final_Project\Entity.h(35,18): warning C4305: 'initializing': truncation from 'double' to 'float'
+  Level0.cpp
+C:\Users\drago\source\repos\CS3113_Final_Project\CS3113_Final_Project\Entity.h(35,18): warning C4305: 'initializing': truncation from 'double' to 'float'
+  Level1.cpp
+C:\Users\drago\source\repos\CS3113_Final_Project\CS3113_Final_Project\Entity.h(35,18): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\drago\source\repos\CS3113_Final_Project\CS3113_Final_Project\Level1.cpp(138,26): warning C4018: '<': signed/unsigned mismatch
+  Level2.cpp
+C:\Users\drago\source\repos\CS3113_Final_Project\CS3113_Final_Project\Entity.h(35,18): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\drago\source\repos\CS3113_Final_Project\CS3113_Final_Project\Level2.cpp(130,26): warning C4018: '<': signed/unsigned mismatch
+  Level3.cpp
+C:\Users\drago\source\repos\CS3113_Final_Project\CS3113_Final_Project\Entity.h(35,18): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\drago\source\repos\CS3113_Final_Project\CS3113_Final_Project\Level3.cpp(149,26): warning C4018: '<': signed/unsigned mismatch
+  main.cpp
+C:\Users\drago\source\repos\CS3113_Final_Project\CS3113_Final_Project\Entity.h(35,18): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\drago\source\repos\CS3113_Final_Project\CS3113_Final_Project\main.cpp(179,29): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Users\drago\source\repos\CS3113_Final_Project\CS3113_Final_Project\main.cpp(180,28): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Users\drago\source\repos\CS3113_Final_Project\CS3113_Final_Project\main.cpp(191,21): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\drago\source\repos\CS3113_Final_Project\CS3113_Final_Project\main.cpp(196,9): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\drago\source\repos\CS3113_Final_Project\CS3113_Final_Project\main.cpp(229,64): warning C4244: '=': conversion from 'const T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\drago\source\repos\CS3113_Final_Project\CS3113_Final_Project\main.cpp(341,34): warning C4018: '<': signed/unsigned mismatch
+C:\Users\drago\source\repos\CS3113_Final_Project\CS3113_Final_Project\main.cpp(426,30): warning C4018: '<': signed/unsigned mismatch
+  Generating Code...
+  CS3113_Final_Project.vcxproj -> C:\Users\drago\source\repos\CS3113_Final_Project\CS3113_Final_Project\Debug\CS3113_Final_Project.exe
