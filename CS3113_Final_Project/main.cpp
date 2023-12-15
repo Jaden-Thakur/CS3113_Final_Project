@@ -118,7 +118,7 @@ void initialize()
 {
     
     SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO);
-    g_display_window = SDL_CreateWindow("Not So Super Jaden",
+    g_display_window = SDL_CreateWindow("Jaden in the Dungeon",
         SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
         WINDOW_WIDTH, WINDOW_HEIGHT,
         SDL_WINDOW_OPENGL);
@@ -430,7 +430,6 @@ void render()
         
     // render UI element based on win or lose
     if (g_win) {
-        LOG(g_win)
         endscreen_text = "You Won!";
         font_position = glm::vec3(player->get_position().x - 2.0f, player->get_position().y, 0.0f);
         Utility::draw_text(&g_program, font_texture_id, endscreen_text, 0.5f, 0.000001f, font_position);
