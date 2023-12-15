@@ -397,6 +397,7 @@ void update()
         sword->hit = false;
     }
     
+    LOG(player->get_position().x << ", " << player->get_position().y);
 
     g_view_matrix = glm::mat4(1.0f);
     g_view_matrix = glm::translate(g_view_matrix, glm::vec3(-player->get_position().x + 5.5, -player->get_position().y - 3, 0.0f));
@@ -427,9 +428,9 @@ void render()
     }
         
     // render UI element based on win or lose
-    if (g_active_scene == g_level_3 && player->get_position().x >= 17 && player->m_collided_bottom) {
+    if (g_win) {
         endscreen_text = "You Won!";
-        font_position = glm::vec3(3.5f, -3.0f, 0.0f);
+        font_position = glm::vec3(player->get_position().x - 2.0f, player->get_position().y, 0.0f);
         Utility::draw_text(&g_program, font_texture_id, endscreen_text, 0.5f, 0.000001f, font_position);
         player->deactivate();
     }
